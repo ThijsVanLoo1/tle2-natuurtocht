@@ -1,3 +1,5 @@
+// C:/Users/ashfa/Development/tle2-natuurtocht/tailwind.config.js
+
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 
@@ -12,7 +14,8 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                // Vervang 'Figtree' door 'Inter' als de standaard
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
         },
     },
