@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('card_season', function (Blueprint $table) {
-            $table->bigInteger('card_id')->unique();
+            $table->bigInteger('card_id')->index();
             $table->foreign('card_id')->references('id')->on('cards');
-            $table->bigInteger('season_id')->unique();
+            $table->bigInteger('season_id')->index();
             $table->foreign('season_id')->references('id')->on('seasons');
+            $table->unique(['card_id', 'season_id']);
         });
 
         Schema::enableForeignKeyConstraints();

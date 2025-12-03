@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('card_location', function (Blueprint $table) {
-            $table->bigInteger('card_id')->unique();
+            $table->bigInteger('card_id')->index();
             $table->foreign('card_id')->references('id')->on('cards');
-            $table->bigInteger('location_id')->unique();
+            $table->bigInteger('location_id')->index();
             $table->foreign('location_id')->references('id')->on('locations');
+            $table->unique(['card_id', 'location_id']);
         });
 
         Schema::enableForeignKeyConstraints();

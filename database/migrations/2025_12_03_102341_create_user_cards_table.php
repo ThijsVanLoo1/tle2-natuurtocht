@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('user_cards', function (Blueprint $table) {
-            $table->bigInteger('user_id')->unique();
+            $table->bigInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->bigInteger('card_id')->unique();
+            $table->bigInteger('card_id')->index();
             $table->foreign('card_id')->references('id')->on('cards');
             $table->date('acquired_at');
             $table->string('image_url', 255);
             $table->boolean('is_shiny');
+            $table->unique(['user_id', 'card_id']);
         });
 
         Schema::enableForeignKeyConstraints();
