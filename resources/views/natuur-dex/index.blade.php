@@ -14,8 +14,8 @@
     @endpush
 
     <!-- Mobiele Container -->
-    <div class="w-full max-w-sm mx-auto h-screen bg-white shadow-2xl relative overflow-hidden flex flex-col" x-data="{ openAccordion: {{ $categories->first()->id ?? 'null' }} }">
-
+    <div class="w-full max-w-sm mx-auto h-screen bg-white shadow-2xl relative overflow-hidden flex flex-col"
+         x-data="{openAccordion: {{ $categories->first()->id ?? 'null' }}}">
        <x-slot:header>
            <header class="absolute top-0 left-0 right-0 bg-white z-10 shadow-md">
                <div class="p-4 border-b border-gray-200">
@@ -34,11 +34,9 @@
            </header>
        </x-slot:header>
 
-
         <!-- 2. Scrollbare Content Sectie -->
         <main class="flex-1 overflow-y-auto safe-area-padding">
             <div class="p-4 space-y-2">
-
                 @foreach($categories as $category)
                     <div>
                         <button @click="openAccordion = (openAccordion === {{ $category->id }} ? null : {{ $category->id }})"
@@ -70,13 +68,6 @@
                             @empty
                                 <p class="text-center text-gray-500 p-4">Geen items gevonden in deze categorie.</p>
                             @endforelse
-
-                            @if($loop->first)
-                                <div class="flex justify-center items-center gap-4 mt-8">
-                                    <img src="https://placehold.co/100x40/DDD/777?text=Natuurmonumenten" alt="Natuurmonumenten" class="h-8">
-                                    <img src="https://placehold.co/50x40/DDD/777?text=CBF" alt="CBF" class="h-8">
-                                </div>
-                            @endif
                         </div>
                     </div>
                 @endforeach
@@ -97,6 +88,5 @@
                 </a>
             </div>
         </footer>
-
     </div>
 </x-app-layout>

@@ -1,1 +1,21 @@
 @import 'tailwindcss';
+
+/* SHINY ANIMATIE */
+.shiny {
+    border: 4px solid transparent;
+    border-radius: 12px;
+    animation: shinyBorder 3s linear infinite;
+}
+
+/* Border-kleur animatie */
+@keyframes shinyBorder {
+    0% {
+        border-color: hsl(20, 90%, 70%); /* neon peach */
+    }
+    50% {
+        border-color: hsl(190, 100%, 70%); /* soft neon cyan */
+    }
+    100% {
+        border-color: hsl(20, 90%, 70%);
+    }
+}
