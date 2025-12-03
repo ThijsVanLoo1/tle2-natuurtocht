@@ -6,16 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Card extends Model
 {
+    protected $table = 'cards';
     protected $guarded = [];
+
+    public $timestamps = false;
 
     protected $casts = [
         'properties' => 'array',
     ];
-
-    public $timestamps = false; // zet op true / verwijder als je timestamps hebt in cards
 
     public function category(): BelongsTo
     {
@@ -37,9 +39,28 @@ class Card extends Model
         return $this->hasMany(Quiz::class, 'card_id');
     }
 
-    public function users(): BelongsToMany
+
+    protected function subGroup(): Attribute
     {
-        return $this->belongsToMany(User::class, 'user_cards')
-            ->withPivot(['acquired_at', 'image_url', 'is_shiny']);
+        return Attribute::make(
+            get: function () {
+                $fromProps = $this->properties['seizoen'] ?? null;
+                if ($fromProps) return $fromProps;
+
+                $names = $this->relationLoaded('seasons')
+                    ? $this->seasons->pluck('name')->all()
+                    : [];
+
+                return $names ? implode(', ', $names) : 'Overig';
+            }
+        );
+    }
+
+    protected function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) =>
+            $value ?: 'https://placehold.co/400x300/DDD/777?text=' . urlencode($this->name ?? 'Card')
+        );
     }
 }

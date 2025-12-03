@@ -9,7 +9,7 @@ class Location extends Model
 {
     protected $guarded = [];
 
-    public $timestamps = false; // zet op true als jij wél created_at/updated_at hebt
+    public $timestamps = false;
 
     public function cards(): BelongsToMany
     {

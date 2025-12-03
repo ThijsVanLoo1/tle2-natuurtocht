@@ -15,7 +15,7 @@ class Quiz extends Model
         'answers' => 'array',
     ];
 
-    public $timestamps = false; // zet op true als jij timestamps toegevoegd hebt
+    public $timestamps = false;
 
     public function card(): BelongsTo
     {
