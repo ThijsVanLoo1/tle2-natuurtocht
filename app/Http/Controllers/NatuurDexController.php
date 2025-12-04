@@ -19,7 +19,6 @@ class NatuurDexController extends Controller
             return $category;
         });
 
-        // Deze data kan later uit een andere bron komen
         $location = "Schiebroekse Polder";
         $season = "Herfst";
 
