@@ -10,8 +10,13 @@ class CardController extends Controller
 {
     public function show(NatureItem $card)
     {
+        $location = "Schiebroekse Polder";
+        $season = "Herfst";
+
         return view('cards.show', [
-            'card' => $card
+            'card' => $card,
+            'location' => $location,
+            'season' => $season
         ]);
     }
 }
