@@ -58,14 +58,21 @@
                                 <h3 class="text-lg font-bold text-gray-800 mb-2 mt-4">{{ $subGroup }}</h3>
                                 <div class="grid grid-cols-3 gap-4">
                                     @foreach($items as $item)
-                                        {{-- <div @class([
+
+                                        <!-- OPTIONEEL: Maak kaartje shiny -->
+                                        <div @class([
                                             'bg-yellow-100 border border-yellow-200 rounded-lg p-2 text-center shadow',
-                                            'shiny' => $item->pivot->is_shiny,
-                                        ])> --}}
-                                        <div class="bg-yellow-100 border border-yellow-200 rounded-lg p-2 text-center shadow">
-                                            <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="mx-auto mb-2 rounded">
-                                            <span class="block text-xs font-bold text-gray-500">{{ $item->number }}</span>
-                                            <span class="block text-sm font-semibold text-gray-800">{{ $item->name }}</span>
+                                            'shiny' => optional($item->pivot)->is_shiny,
+                                        ])>
+                                            <div
+                                                class="bg-yellow-100 border border-yellow-200 rounded-lg p-2 text-center shadow">
+                                                <img src="{{ $item->image_url }}" alt="{{ $item->name }}"
+                                                     class="mx-auto mb-2 rounded">
+                                                <span
+                                                    class="block text-xs font-bold text-gray-500">{{ $item->number }}</span>
+                                                <span
+                                                    class="block text-sm font-semibold text-gray-800">{{ $item->name }}</span>
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>

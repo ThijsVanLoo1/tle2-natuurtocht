@@ -33,8 +33,7 @@ class Card extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(\App\Models\User::class, 'user_cards')
-            ->withPivot(['acquired_at', 'image_url', 'is_shiny'])
-            ->as('ownership');
+            ->withPivot(['acquired_at', 'image_url', 'is_shiny']);
     }
 
     public function locations(): BelongsToMany

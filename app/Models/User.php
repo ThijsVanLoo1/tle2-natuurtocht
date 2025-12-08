@@ -50,7 +50,6 @@ class User extends Authenticatable
     public function cards(): BelongsToMany
     {
         return $this->belongsToMany(\App\Models\Card::class, 'user_cards')
-            ->withPivot(['acquired_at', 'image_url', 'is_shiny'])
-            ->as('ownership');
+            ->withPivot(['acquired_at', 'image_url', 'is_shiny']);
     }
 }
