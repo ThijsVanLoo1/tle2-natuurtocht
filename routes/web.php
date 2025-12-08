@@ -5,7 +5,7 @@ use App\Http\Controllers\NatuurDexController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [NatuurDexController::class, 'index']);
+Route::get('/', [NatuurDexController::class, 'index'])->name('index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
