@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -22,8 +23,40 @@ class NatuurDexController extends Controller
 
         // Deze data kan later uit een andere bron komen
         $location = "Schiebroekse Polder";
-        $season = "Herfst";
 
-        return view('natuur-dex.index', compact('categories', 'location', 'season'));
+
+        // Huidig seizoen wordt bepaald obv huidige maand en meegestuurd naar de view
+        $month = Carbon::now()->month;
+        $season = match (true) {
+            $month >= 3 && $month <= 5 => 'Lente',
+            $month >= 6 && $month <= 8 => 'Zomer',
+            $month >= 9 && $month <= 11 => 'Herfst',
+            default => 'Winter',
+        };
+
+        $seasonStyles = match ($season) {
+            'Lente' => [
+                'color' => 'text-green-600',
+                'icon' => 'icons.seed',
+            ],
+            'Zomer' => [
+                'color' => 'text-yellow-600',
+                'icon' => 'icons.sun',
+            ],
+            'Herfst' => [
+                'color' => 'text-orange-600',
+                'icon' => 'icons.leaf',
+            ],
+            'Winter' => [
+                'color' => 'text-blue-600',
+                'icon' => 'icons.snow',
+            ],
+            default => [
+                'color' => 'text-gray-600',
+                'icon' => 'icons.default',
+            ]
+        };
+
+        return view('natuur-dex.index', compact('categories', 'location', 'season', 'seasonStyles'));
     }
 }
