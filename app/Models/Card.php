@@ -19,6 +19,7 @@ class Card extends Model
         'properties' => 'array',
     ];
 
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -27,6 +28,13 @@ class Card extends Model
     public function seasons(): BelongsToMany
     {
         return $this->belongsToMany(Season::class, 'card_season');
+    }
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(\App\Models\User::class, 'user_cards')
+            ->withPivot(['acquired_at', 'image_url', 'is_shiny'])
+            ->as('ownership');
     }
 
     public function locations(): BelongsToMany
@@ -63,4 +71,6 @@ class Card extends Model
             $value ?: 'https://placehold.co/400x300/DDD/777?text=' . urlencode($this->name ?? 'Card')
         );
     }
+
+
 }
