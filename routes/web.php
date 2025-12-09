@@ -12,9 +12,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/quiz', function () {
-    return view('quiz');
-})->name('quiz');
+Route::get('/quiz/{id}', [\App\Http\Controllers\QuizController::class, 'showQuiz'])
+    ->name('quiz');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

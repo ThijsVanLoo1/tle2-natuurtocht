@@ -50,8 +50,9 @@
                     </ul>
 
                     <button
+
                         class="mt-6 w-full bg-cyan-800 hover:bg-cyan-900 text-white font-semibold py-2 px-4 rounded-lg shadow">
-                        Maak foto
+                        <a href="/quiz/{{$card->id}}">Maak foto</a>
                     </button>
 
                 </div>

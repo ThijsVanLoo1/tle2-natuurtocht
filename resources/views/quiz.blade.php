@@ -1,4 +1,8 @@
 <x-app-layout>
+    <!--Get card id
+    Get quiz data with corresponding card id
+    -->
+
     <x-slot:header>Quiz</x-slot:header>
     <!--I'm so so sorry for the css and Javascript chilling in here but I had no choice ;w; it didn't work otherwise-->
     <body
@@ -32,7 +36,6 @@
     </section>
     <script> <!--src="../js/quiz.js" defer-->
         let allInputButtons = document.getElementsByTagName("input");
-
         document.getElementById("answerA_input").addEventListener("click", function () {
             pressedBtn(0);
         });
@@ -85,7 +88,6 @@
             }
             document.getElementById('submitBtn').style.visibility = "visible";
         }
-
     </script>
     </body>
 </x-app-layout>
