@@ -40,13 +40,20 @@
                 <a href="{{ route('natuur-dex.index') }}" class="text-blue-600 underline text-sm">&larr; Terug</a>
 
                 <div class="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
-                    <img src="{{ $card->image_url }}" class="rounded mb-4" alt="{{ $card->name }}">
+                    <img
+                        src="{{ $owned && optional($ownedCard->pivot)->image_url ? asset($ownedCard->pivot->image_url) : $card->image_url }}"
+                        class="rounded mb-4"
+                        alt="{{ $card->title }}"
+                    >
 
-                    <h1 class="text-2xl font-bold">{{ $card->name }}</h1>
+                    <h1 class="text-2xl font-bold">{{ $card->title }}</h1>
                     <p class="text-gray-500 text-sm">Kaartnummer: {{ $card->id }}</p>
 
                     <ul class="list-disc pl-5 mt-4 text-gray-700">
-                        <li class="font-bold">Seizoen: {{ $card->season->name ?? 'Onbekend' }}</li>
+                        <li class="font-bold">
+                            Seizoen: {{ $card->seasons->pluck('name')->join(', ') ?: 'Onbekend' }}
+                        </li>
+
                         <li>{{ $card->description ?? 'Geen beschrijving beschikbaar.' }}</li>
                     </ul>
 
