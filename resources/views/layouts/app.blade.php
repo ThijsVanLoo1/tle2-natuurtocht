@@ -25,12 +25,9 @@
     {{ $header }}
 </header>
 
-<!-- Page Content -->
-<main class="bg-yellow-50">
-    {{ $slot }}
-</main>
+{{ $slot }}
 
-<footer class="border-t">
+<footer class="">
     <div class="flex justify-between items-center m-4">
         <img src="{{ asset('images/natuurmonumenten-logo.png') }}" alt="" class="w-1/2">
         <img src="{{ asset('images/cbf-erkend.png') }}" alt="" class="w-1/4">
