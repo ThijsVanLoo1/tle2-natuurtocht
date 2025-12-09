@@ -15,17 +15,10 @@ class QuizController extends Controller
             ->where('card_id', '=', $id)
             ->get()
             ->first();
-        dump($tableData);
-        dump($tableData->answers);
-        return view("quiz");
+//        dump($tableData);
+//        dump((json_decode($tableData->answers)));
+        return view("quiz")->with('data', $tableData);
     }
 
-    //get the id
-    //get data from quiz data base for the data
-    //send this data to the view
-
-
-    //receive send data
-    //if tue or false
-    //set boolean of user_cards?
+//how to make the elements random? Or how to shuffle elements within an array?
 }

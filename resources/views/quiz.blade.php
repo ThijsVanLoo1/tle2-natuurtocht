@@ -1,13 +1,26 @@
 <x-app-layout>
-    <!--Get card id
-    Get quiz data with corresponding card id
-    -->
+    <?php
+    $answersArray = json_decode($data->answers, true);
+    shuffle($answersArray);
+
+    $setAnswerId;
+    foreach ($answersArray as $question) {
+        if ($question['correct'] === true) {
+            $setAnswerId = $question['id'];
+        }
+    }
+    ?>
 
     <x-slot:header>Quiz</x-slot:header>
     <!--I'm so so sorry for the css and Javascript chilling in here but I had no choice ;w; it didn't work otherwise-->
     <body
             style="text-align: center; display: flex; gap: 3vh; flex-direction: column; background: #FCF5EB;">
-    <p id="answer" style="visibility:hidden; position: absolute">2</p>
+    <div style="visibility: hidden; position: absolute"><!--Hidden elements-->
+        <p id="answerNum">{{$setAnswerId}}</p>
+        <!-- -1 isn't best way to solve but works for now-->
+        <p id="answerExplanation">//Explanation</p>
+        <!--🔴 Dit moet nog een 'if empty' zodat er of text is of de daadwerkelijke explanation-->
+    </div>
     <section style="margin-top: 6vh;">
         <h1 style="font-size: 2rem;">Upload gelukt!</h1>
         <hr style="background: black; margin-top: 2vh; margin-bottom: 2vh;">
@@ -15,14 +28,12 @@
     </section>
     <section style="margin-top: 3vh;">
         <form action="{{ route('index') }}" method="GET">
-            <h2 style="margin-bottom: 2vh;">Vraag over de gemaakte kaart</h2>
+            <h2 style="margin-bottom: 2vh;">{{$data->question_text}}</h2>
             <div style="display: flex; flex-direction: column; gap: 2vh;">
-                <input type="button" value="A) Antwoord A" id="answerA_input"
-                       style="background:#0076A8; color:white; border: none; border-radius: 10%; padding: 10px;">
-                <input type="button" value="B) Antwoord B" id="answerB_input"
-                       style="background:#0076A8; color:white; border: none; border-radius: 10%; padding: 10px;">
-                <input type="button" value="C) Antwoord C" id="answerC_input"
-                       style="background:#0076A8; color:white; border: none; border-radius: 10%; padding: 10px;">
+                @foreach($answersArray as $question)
+                    <input type="button" value="{{$question['text']}}" id="{{$question['id']}}" class="userInput"
+                           style="background:#0076A8; color:white; border: none; border-radius: 10%; padding: 10px;">
+                @endforeach
             </div>
             <div style="margin-top: 3vh">
                 <span id="resultAns"></span>
@@ -35,25 +46,31 @@
         </form>
     </section>
     <script> <!--src="../js/quiz.js" defer-->
-        let allInputButtons = document.getElementsByTagName("input");
-        document.getElementById("answerA_input").addEventListener("click", function () {
-            pressedBtn(0);
-        });
-        document.getElementById("answerB_input").addEventListener("click", function () {
-            pressedBtn(1);
-        });
-        document.getElementById("answerC_input").addEventListener("click", function () {
-            pressedBtn(2);
-        });
+        let allInputButtons = document.getElementsByClassName("userInput");
 
-        let rightButton = parseInt(document.getElementById("answer").innerHTML);
+        //Get data from php
+        let rightButton = parseInt(document.getElementById("answerNum").innerHTML); //which is the right button (id of correct one must be given)
+        let explanation = document.getElementById("answerExplanation").innerHTML;
+        //Get the explanation if it exists (check is in init)
+
+        //set data from php
         let resultTitle = document.getElementById("resultAns");
         let explanationElement = document.getElementById("explanation");
 
         window.addEventListener('load', init);
 
         function init() {
+            for (let i = 0; i < allInputButtons.length; i++) {
+                document.getElementsByClassName("userInput")[i].addEventListener("click", function () {
+                    pressedBtn(i)
+                });
+            }
 
+            if (explanation === null || explanation === "") { //null if it's empty
+                explanation = "Geen uitleg beschikbaar";
+            } else {
+                explanation = document.getElementById("answerExplanation").innerHTML;
+            }
         }
 
         function pressedBtn(btnPressed) {
@@ -61,14 +78,13 @@
             buttonCheck(btnPressed);
 
             //disables all buttons
-            for (let i = 0; i < allInputButtons; i++) {
-                let changeBtn = document.getElementsByTagName("input")[i].id;
-                document.getElementById(changeBtn).disabled = true;
+            for (let i = 0; i < allInputButtons.length; i++) {
+                document.getElementsByClassName("userInput")[i].disabled = true;
             }
         }
 
         function buttonCheck(btn) {
-            if (btn === rightButton) {
+            if (parseInt(allInputButtons[btn].id) === rightButton) {
                 result(true, btn);
             } else {
                 result(false, btn);
@@ -76,9 +92,9 @@
         }
 
         function result(result, btnChange) {
-            let changeInputBtn = allInputButtons[btnChange].id; //neater way to write it
+            let changeInputBtn = allInputButtons[btnChange].id;
             if (result) {
-                resultTitle.innerHTML = "Correct";
+                resultTitle.innerHTML = "Correct!";
                 explanationElement.innerHTML = "Hier is de reden waarom je antwoord goed is";
                 document.getElementById(changeInputBtn).style.background = "#16BE00";
             } else if (!result) {
@@ -86,6 +102,8 @@
                 explanationElement.innerHTML = "Dit is niet het goede antwoord. Je hebt wel het kaartje verdiend!";
                 document.getElementById(changeInputBtn).style.background = "red";
             }
+            explanationElement.innerHTML = explanation;
+
             document.getElementById('submitBtn').style.visibility = "visible";
         }
     </script>
