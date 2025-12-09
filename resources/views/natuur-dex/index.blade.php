@@ -20,7 +20,7 @@
            <div
                class="text-center text-[25px] p-6 font-extrabold text-blue-700 bg-gray-50 absolute top-0 left-0 right-0 z-10 shadow-md">
                <div class="p-2 flex justify-around gap-10 items-center bg-gray-50">
-                   <h1 class="font-bold">{{ $location }}</h1>
+                   <h1 class="font-bold">{{ $location }} - {{ $percentage }}%</h1>
                    <div x-show="openAccordion === {{ $categories->first()->id ?? 'null' }}"
                         x-transition
                         class="flex items-center gap-1 font-semibold {{ $seasonStyles['color'] }}">
