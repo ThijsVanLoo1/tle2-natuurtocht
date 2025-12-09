@@ -20,9 +20,9 @@
     <!-- Stack voor pagina-specifieke styles -->
     @stack('styles')
 </head>
-    <body class="m-0">np
+    <body class="m-0">
 <header class="border-b shadow-lg">
-    <h1 class="text-center text-3xl p-6 font-extrabold text-blue-700">{{ $header }}</h1>
+    {{ $header }}
 </header>
 
 <!-- Page Content -->
