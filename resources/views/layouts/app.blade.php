@@ -20,21 +20,20 @@
     <!-- Stack voor pagina-specifieke styles -->
     @stack('styles')
 </head>
-    <body class="m-0">np
-<header class="border-b shadow-lg">
-    <h1 class="text-center text-3xl p-6 font-extrabold text-blue-700">{{ $header }}</h1>
-</header>
+    <body class="m-0">
+    <div class="relative max-w-sm mx-auto">
+        <header class="border-b shadow-lg">
+            {{ $header }}
+        </header>
 
-<!-- Page Content -->
-<main class="bg-yellow-50">
-    {{ $slot }}
-</main>
+        {{ $slot }}
 
-<footer class="border-t">
-    <div class="flex justify-between items-center m-4">
-        <img src="{{ asset('images/natuurmonumenten-logo.png') }}" alt="" class="w-1/2">
-        <img src="{{ asset('images/cbf-erkend.png') }}" alt="" class="w-1/4">
-        </div>
-</footer>
+        <footer class="">
+            <div class="flex justify-between items-center m-4">
+                <img src="{{ asset('images/natuurmonumenten-logo.png') }}" alt="" class="w-1/2">
+                <img src="{{ asset('images/cbf-erkend.png') }}" alt="" class="w-1/4">
+            </div>
+        </footer>
+    </div>
 </body>
 </html>
