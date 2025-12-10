@@ -47,14 +47,9 @@
                         <li>{{ $card->description ?? 'Geen beschrijving beschikbaar.' }}</li>
                     </ul>
 
-                    <button
-
-                        class="mt-6 w-full bg-cyan-800 hover:bg-cyan-900 text-white font-semibold py-2 px-4 rounded-lg shadow">
-                        <a href="/quiz/{{$card->id}}">Maak foto</a>
-                    </button>
                     @if($owned)
                         <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded">
-                            <h2 class="font-semibold text-green-800">Test: was Extra Informatie</h2>
+                            <h2 class="font-semibold text-green-800">Extra Informatie</h2>
                             <p class="text-gray-700 mt-2">{{ $locatieText ?? 'Geen extra informatie beschikbaar.' }}</p>
 
                             <h3 class="font-semibold text-green-800 mt-4">Leuk weetje</h3>
@@ -84,14 +79,17 @@
                 <h3 class="text-xl font-semibold mb-4">Maak een foto</h3>
 
                 <div class="relative">
-                    <video x-show="!photoPreview" x-ref="video" autoplay playsinline class="w-full h-auto rounded"></video>
+                    <video x-show="!photoPreview" x-ref="video" autoplay playsinline
+                           class="w-full h-auto rounded"></video>
                     <canvas x-show="photoPreview" x-ref="canvas" class="w-full h-auto rounded"></canvas>
 
-                    <div x-show="loading" class="absolute inset-0 bg-white bg-opacity-80 flex flex-col items-center justify-center">
+                    <div x-show="loading"
+                         class="absolute inset-0 bg-white bg-opacity-80 flex flex-col items-center justify-center">
                         <p class="text-lg font-semibold">Uploaden...</p>
                     </div>
 
-                    <div x-show="error" x-cloak class="absolute bottom-4 left-4 right-4 bg-red-500 text-white p-3 rounded-lg text-center">
+                    <div x-show="error" x-cloak
+                         class="absolute bottom-4 left-4 right-4 bg-red-500 text-white p-3 rounded-lg text-center">
                         <p x-text="error"></p>
                     </div>
                 </div>
@@ -136,7 +134,7 @@
                     this.error = '';
                     this.photoPreview = false;
 
-                    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                    navigator.mediaDevices.getUserMedia({video: {facingMode: 'environment'}})
                         .then(stream => {
                             this.stream = stream;
                             this.$refs.video.srcObject = stream;
