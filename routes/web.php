@@ -13,10 +13,12 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/quiz/{id}', [\App\Http\Controllers\QuizController::class, 'showQuiz'])
-    ->name('quiz');
+    ->name('quiz')
+    ->middleware(['auth', 'verified']);
 
-Route::post('/cards/{id}', [CardController::class, 'makeCardShiny'])
-    ->name('makeShiny');
+Route::get('/cards/{id}', [CardController::class, 'makeCardShiny'])
+    ->name('cards.makeShiny')
+    ->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

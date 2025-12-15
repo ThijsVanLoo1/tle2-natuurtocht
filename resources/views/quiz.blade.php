@@ -17,7 +17,6 @@
             style="text-align: center; display: flex; gap: 3vh; flex-direction: column; background: #FCF5EB;">
     <div style="visibility: hidden; position: absolute"><!--Hidden elements-->
         <p id="answerNum">{{$setAnswerId}}</p>
-        <!-- -1 isn't best way to solve but works for now-->
         <p id="answerExplanation"></p>
         <!--🔴 Dit moet nog een 'if empty' zodat er of text is of de daadwerkelijke explanation-->
         <!--🔴 Als het goed is geklikt moet de kaart shiny worden (miss different btns)-->
@@ -28,7 +27,7 @@
         <p style="margin-left: 15vw; margin-right: 15vw;">Beantwoord de vraag juist voor een glimmende kaart!</p>
     </section>
     <section style="margin-top: 3vh;">
-        <form action="{{ route('index') }}" method="GET"> <!--Post to page that changes card data-->
+        <form action="{{ route('index')}}" method="GET">
             <h2 style="margin-bottom: 2vh;">{{$data->question_text}}</h2>
             <div style="display: flex; flex-direction: column; gap: 2vh;">
                 @foreach($answersArray as $question)
@@ -58,6 +57,7 @@
         let resultTitle = document.getElementById("resultAns");
         let explanationElement = document.getElementById("explanation");
 
+        //on load run init function
         window.addEventListener('load', init);
 
         function init() {
@@ -98,10 +98,15 @@
                 resultTitle.innerHTML = "Correct!";
                 explanationElement.innerHTML = "Hier is de reden waarom je antwoord goed is";
                 document.getElementById(changeInputBtn).style.background = "#16BE00";
+                let text = document.getElementById(changeInputBtn).value;
+                document.getElementById(changeInputBtn).value = text + " ✓";
             } else if (!result) {
                 resultTitle.innerHTML = "Helaas";
                 explanationElement.innerHTML = "Dit is niet het goede antwoord. Je hebt wel het kaartje verdiend!";
                 document.getElementById(changeInputBtn).style.background = "red";
+                let text = document.getElementById(changeInputBtn).value;
+                document.getElementById(changeInputBtn).value = text + " ✘";
+                //✖ ✗ ✘
             }
             explanationElement.innerHTML = explanation;
 

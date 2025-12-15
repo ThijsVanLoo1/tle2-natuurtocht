@@ -84,6 +84,7 @@ class PhotoController extends Controller
                 'redirect_url' => route('cards.show', $card),
             ]);
 
+
         } catch (\Exception $e) {
             Log::error('Fout bij uploaden van foto voor kaart ' . $card->id . ': ' . $e->getMessage());
 

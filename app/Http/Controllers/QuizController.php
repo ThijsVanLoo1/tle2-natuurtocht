@@ -9,13 +9,21 @@ use Illuminate\Support\Facades\DB;
 class QuizController extends Controller
 {
     //
+    public int $idData;
+
     public function showQuiz(int $id)
     {
+        $this->idData = $id;
         $tableData = DB::table('quiz')
             ->where('card_id', '=', $id)
             ->get()
             ->first();
-        return view("quiz")->with('data', $tableData);
+        return view("quiz")->with('data', $tableData)->with('idCard', $id);
     }
+
+//    public function confirmChoice()
+//    {
+//        return view('cards.show', $this->idData);
+//    }
 
 }
