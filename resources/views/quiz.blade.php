@@ -27,7 +27,7 @@
         <p style="margin-left: 15vw; margin-right: 15vw;">Beantwoord de vraag juist voor een glimmende kaart!</p>
     </section>
     <section style="margin-top: 3vh;">
-        <form action="{{ route('index')}}" method="GET">
+        <form action="{{ route('cards.makeShiny', $idCard)}}" method="GET">
             <h2 style="margin-bottom: 2vh;">{{$data->question_text}}</h2>
             <div style="display: flex; flex-direction: column; gap: 2vh;">
                 @foreach($answersArray as $question)
@@ -39,11 +39,16 @@
                 <span id="resultAns"></span>
                 <p id="explanation" style="color: dimgrey; font-style: italic;"></p>
                 <div style="margin-top: 3vh">
-                    <input type="submit" value="Verder" id="submitBtn"
+                    <input type="submit" value="Verder" id="submitBtnTrue"
+                           style="visibility: hidden; border: #63BFB5 2px solid; padding: 10px; background: #319E88; position: absolute;">
+                    <input type="submit" value="Verder" id="submitBtnFalse" form="wrongAnswerForm"
                            style="visibility: hidden; border: #63BFB5 2px solid; padding: 10px; background: #319E88">
                 </div>
             </div>
         </form>
+
+        <form action="{{ route('cards.show', $idCard) }}" id="wrongAnswerForm"></form>
+
     </section>
     <script> <!--src="../js/quiz.js" defer-->
         let allInputButtons = document.getElementsByClassName("userInput");
@@ -100,6 +105,7 @@
                 document.getElementById(changeInputBtn).style.background = "#16BE00";
                 let text = document.getElementById(changeInputBtn).value;
                 document.getElementById(changeInputBtn).value = text + " ✓";
+                document.getElementById('submitBtnTrue').style.visibility = "visible";
             } else if (!result) {
                 resultTitle.innerHTML = "Helaas";
                 explanationElement.innerHTML = "Dit is niet het goede antwoord. Je hebt wel het kaartje verdiend!";
@@ -107,10 +113,10 @@
                 let text = document.getElementById(changeInputBtn).value;
                 document.getElementById(changeInputBtn).value = text + " ✘";
                 //✖ ✗ ✘
+                document.getElementById('submitBtnFalse').style.visibility = "visible";
             }
             explanationElement.innerHTML = explanation;
 
-            document.getElementById('submitBtn').style.visibility = "visible";
         }
     </script>
     </body>

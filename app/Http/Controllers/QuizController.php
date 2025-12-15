@@ -20,10 +20,6 @@ class QuizController extends Controller
             ->first();
         return view("quiz")->with('data', $tableData)->with('idCard', $id);
     }
-
-//    public function confirmChoice()
-//    {
-//        return view('cards.show', $this->idData);
-//    }
+    
 
 }

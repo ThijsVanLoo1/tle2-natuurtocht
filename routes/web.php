@@ -16,7 +16,8 @@ Route::get('/quiz/{id}', [\App\Http\Controllers\QuizController::class, 'showQuiz
     ->name('quiz')
     ->middleware(['auth', 'verified']);
 
-Route::get('/cards/{id}', [CardController::class, 'makeCardShiny'])
+//change up the route name
+Route::post('/cards/{id}', [CardController::class, 'makeCardShiny'])
     ->name('cards.makeShiny')
     ->middleware(['auth', 'verified']);
 
