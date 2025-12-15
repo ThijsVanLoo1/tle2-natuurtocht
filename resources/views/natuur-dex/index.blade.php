@@ -12,6 +12,10 @@
         </style>
     @endpush
 
+    @php
+        $u = auth()->user();
+    @endphp
+
     <!-- Mobiele Container -->
     <div class="h-screen bg-white shadow-2xl relative overflow-hidden flex flex-col"
          x-data="{openAccordion: {{ $categories->first()->id ?? 'null' }}}">
@@ -23,6 +27,22 @@
                    <div x-show="openAccordion === {{ $categories->first()->id ?? 'null' }}"
                         x-transition
                         class="flex items-center gap-1 font-semibold {{ $seasonStyles['color'] }}">
+                       <div class="flex items-center justify-between">
+                             <span class="font-semibold text-gray-800">
+                                    Level {{ $u->level }}
+                                    </span>
+
+                                     @if($u->next_level_points)
+                               <span class="text-sm text-gray-500">
+                                 {{ $u->points_balance }} / {{ $u->next_level_points }} pts
+                                 </span>
+                           @else
+                               <span class="text-sm text-gray-500">
+                    {{ $u->points_balance }} pts (max)
+                             </span>
+                           @endif
+                       </div>
+
                        <form method="GET" id="seasonForm" class="mb-4">
                            <select name="season" id="seasonSelect"
                                    onchange="document.getElementById('seasonForm').submit();">

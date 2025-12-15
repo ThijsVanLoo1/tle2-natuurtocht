@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class PhotoController extends Controller
 {
@@ -18,7 +19,6 @@ class PhotoController extends Controller
             return response()->json(['message' => 'Je moet ingelogd zijn.'], 401);
         }
 
-        // Manual validation for AJAX request
         $validator = Validator::make($request->all(), [
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -32,7 +32,10 @@ class PhotoController extends Controller
         }
 
         try {
-            // 1) Zorg dat user de card alvast "owned" is (pivot bestaat dan zeker)
+            // ✅ Check eerst of deze kaart al in bezit is (voor punten + voorkomen duplicates)
+            $alreadyOwned = $user->cards()->where('cards.id', $card->id)->exists();
+
+            // 1) Zorg dat pivot bestaat (owned)
             $user->cards()->syncWithoutDetaching([
                 $card->id => [
                     'acquired_at' => now()->toDateString(),
@@ -54,14 +57,12 @@ class PhotoController extends Controller
                 mkdir($dir, 0755, true);
             }
 
-            // unieke filename
+            // ✅ unieke filename (iets netter)
             $ext = $file->getClientOriginalExtension();
-            $filename = 'user_' . $user->id . '_card_' . $card->id . '_' . time() . '.' . $ext;
+            $filename = Str::uuid()->toString() . '.' . $ext;
 
-            // move naar public/images/cardimages/...
             $file->move($dir, $filename);
 
-            // path zoals jij in DB zet (zonder public_path)
             $relativePath = 'images/cardimages/' . $filename;
 
             // 4) Oude pivot foto verwijderen (alleen als het een lokale file is)
@@ -72,10 +73,17 @@ class PhotoController extends Controller
                 }
             }
 
-            // 5) Pivot updaten
+            // 5) Pivot updaten (foto opslaan bij user_cards)
             $user->cards()->updateExistingPivot($card->id, [
                 'image_url' => $relativePath,
             ]);
+
+            // ✅ 6) Alleen bij eerste keer verzamelen: punten +15
+            if (!$alreadyOwned && method_exists($user, 'awardPoints')) {
+                $user->awardPoints(15, 'card_collected', $card, [
+                    'source' => 'photo_upload',
+                ]);
+            }
 
             session()->flash('success', 'Foto succesvol geüpload en gekoppeld aan jouw kaart!');
 
