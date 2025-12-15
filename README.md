@@ -1,12 +1,31 @@
-🌿 TLE2 Natuurtocht - Natuur DexWelkom bij de Natuurtocht Applicatie. Dit project is een interactieve webapplicatie waarmee gebruikers de natuur in kunnen trekken om specifieke planten, bomen en schimmels te ontdekken. Door foto's te maken van gevonden items, vullen gebruikers hun digitale "Natuur Dex".🚀 Features•Natuur Dex: Een overzicht van alle te verzamelen natuuritems, gegroepeerd per categorie (Bomen, Planten, Bloemen, Schimmels).•Seizoensfilters: De Dex past zich automatisch aan het huidige seizoen aan, of kan handmatig gefilterd worden (Lente, Zomer, Herfst, Winter).•Camera Integratie: In-browser camera functionaliteit om direct foto's te maken en te uploaden.•Progressie Systeem: Gebruikers zien direct hoeveel procent van de items ze hebben gevonden in het huidige gebied/seizoen.•Wizard of Oz Validatie: Een gesimuleerd AI-validatiesysteem om foto-uploads te testen (zie kopje "Testen").•Rijke Data: Elk item bevat feitjes, locatie-informatie en quizvragen.🛠️ Tech Stack•Framework: Laravel (PHP)•Frontend: Blade Templates•Styling: Tailwind CSS•Interactiviteit: Alpine.js (voor de camera, accordions en modals)•Database: MySQL / SQLite⚙️ InstallatieVolg deze stappen om het project lokaal te draaien:1.Clone de repository:Shell Scriptgit clone <jouw-repo-url>
-cd tle2-natuurtocht2.Installeer dependencies:Shell Scriptcomposer install
-npm install3.Environment setup: Kopieer het .env.example bestand naar .env:Shell Scriptcp .env.example .env
-php artisan key:generateZorg dat je database gegevens in de .env correct staan ingesteld.4.Database Migraties & Seeding: Dit is een cruciale stap. De ManualCardSeeder vult de database met alle natuurkaarten (Brandnetel, Eik, etc.).Shell Scriptphp artisan migrate:fresh --seed5.Start de server:Shell Scriptnpm run dev
-# In een nieuwe terminal:
-php artisan serve📸 Hoe werkt de Camera & Validatie (Wizard of Oz)Voor User Story 19 ("Als gebruiker wil ik weten of de foto correct is") is een Wizard of Oz methode geïmplementeerd. Omdat er nog geen echte AI-beeldherkenning is, simuleren we dit proces.Het scenario testen:1.Ga naar een kaart in de Natuur Dex die je nog niet hebt (bv. "Brandnetel").2.Klik op "Maak foto".3.Maak een foto met de camera.Scenario A: Foutieve Foto (Simulatie)•Klik met je muis op de knop "Gebruik foto".•❌ Resultaat: Je krijgt een foutmelding: "Helaas, de foto wordt niet herkend als een Brandnetel...".Scenario B: Correcte Foto (Simulatie)•Zorg dat de foto preview zichtbaar is.•Druk op je toetsenbord op de ENTER toets.•✅ Resultaat: De foto wordt goedgekeurd, geüpload en de kaart wordt aan je collectie toegevoegd.Technische info: De frontend stuurt een hidden field wizard_correct mee. De knop zet deze op 0, de Enter-toets zet deze op 1. De PhotoController checkt deze waarde en geeft een 422 error terug als deze 0 is.📂 Project StructuurHier zijn enkele belangrijke bestanden in de codebase:•app/Models/Card.php: Het hoofdmodel. Maakt gebruik van een json kolom (properties) om flexibele data zoals feitjes, quizvragen en specifieke kenmerken op te slaan.•app/Http/Controllers/NatuurDexController.php: Regelt de logica voor het dashboard, inclusief het filteren op seizoenen en het berekenen van de voortgangspercentages.•app/Http/Controllers/PhotoController.php: Verwerkt de upload, voert de "Wizard of Oz" validatie uit en koppelt de kaart aan de gebruiker.•resources/views/cards/show.blade.php: De detailpagina. Bevat de Alpine.js logica (x-data="camera(...)") voor het aansturen van de webcam en het afvangen van de Enter-toets.🧪 Database SeedingDe applicatie leunt zwaar op de ManualCardSeeder. Deze vult de cards tabel met rijke data. De structuur van een kaart in de database ziet er ongeveer zo uit (in de properties JSON kolom):JSON{
-    "rijk": "Plant",
-    "seizoen": "Lente, Zomer",
-    "feitje": "Wist je dat...",
-    "kenmerken": "Groene bladeren...",
-    "locatie_text": "Bosranden"
-}
+🌿 TLE2 Natuurtocht - Natuur Dex
+Een interactieve webapplicatie waarmee gebruikers planten, bomen en schimmels kunnen ontdekken, verzamelen en hun digitale Natuur Dex vullen.
+🚀 Kernfunctionaliteiten
+Feature	Beschrijving
+Natuur Dex	Overzicht van alle te verzamelen items, gegroepeerd per categorie (Bomen, Planten, Schimmels).
+Seizoensfilters	Filtert items automatisch of handmatig op basis van het seizoen.
+Camera Integratie	Direct foto's maken en uploaden in de browser.
+Progressie	Toont de voortgang in percentages per gebied/seizoen.
+Wizard of Oz	Gesimuleerde AI-validatie voor het testen van foto-uploads.
+Rijke Data	Feitjes, locatie-info en quizvragen per item.
+🛠️ Tech Stack
+Framework: Laravel (PHP)
+Frontend: Blade Templates
+Styling: Tailwind CSS
+Interactiviteit: Alpine.js (Camera, accordions, modals)
+Database: MySQL / SQLite
+⚙️ Installatie (Lokale Setup)
+Voer de volgende stappen uit in de terminal:
+git clone <jouw-repo-url>
+composer install & npm install
+cp .env.example .env & php artisan key:generate
+Cruciaal: Database migraties en seeding:
+php artisan migrate:fresh --seed
+Start de servers:
+npm run dev
+(Nieuwe terminal) php artisan serve
+📸 Wizard of Oz Validatie (Simulatie)
+Dit simuleert de AI-herkenning (User Story 19).
+Scenario	Actie	Resultaat
+Foutief	Klik op de knop "Gebruik foto".	❌ Foutmelding: Foto niet herkend.
+Correct	Druk op de ENTER toets op je toetsenbord (terwijl de preview zichtbaar is).	✅ Foto goedgekeurd en kaart verzameld.
