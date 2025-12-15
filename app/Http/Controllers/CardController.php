@@ -16,7 +16,7 @@ class CardController extends Controller
 
         $ownedCard = $user?->cards()->where('cards.id', $card->id)->first();
 
-        $owned = (bool) $ownedCard;
+        $owned = (bool)$ownedCard;
 
         $location = "Schiebroekse Polder";
         $season = "Herfst";
@@ -37,6 +37,7 @@ class CardController extends Controller
             ->get()
             ->first();
 
+        json_decode($shinyCard, true);
         $shinyCard['is_shiny'] = true;
         return redirect()->route('natuur-dex.index');
     }
