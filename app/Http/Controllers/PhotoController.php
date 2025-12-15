@@ -81,7 +81,7 @@ class PhotoController extends Controller
 
             return response()->json([
                 'message' => 'Foto succesvol geüpload!',
-                'redirect_url' => route('cards.show', $card),
+                'redirect_url' => route('quiz', $card->id),
             ]);
 
 
