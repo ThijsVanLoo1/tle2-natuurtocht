@@ -1,106 +1,111 @@
-# 🌿 TLE2 Natuurtocht - Natuur Dex
+# 🌿 TLE2 Natuurtocht — Natuur Dex
 
-Welkom bij de Natuurtocht Applicatie. Dit project is een interactieve webapplicatie waarmee gebruikers de natuur in kunnen trekken om specifieke planten, bomen en schimmels te ontdekken. Door foto's te maken van gevonden items, vullen gebruikers hun digitale "Natuur Dex".
+<p align="center">
+  <img src="https://img.shields.io/badge/Framework-Laravel-ff2d20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
+  <img src="https://img.shields.io/badge/Frontend-Alpine.js-8bc0d0?style=for-the-badge&logo=alpinedotjs&logoColor=white" alt="Alpine.js">
+  <img src="https://img.shields.io/badge/Styling-Tailwind_CSS-38bdf8?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind">
+  <img src="https://img.shields.io/badge/Database-MySQL-4479a1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+</p>
 
-## 🚀 Kernfunctionaliteiten
+---
+<details>
+    
+<summary>## 📖 Introduction</summary>
+Welcome to the **Natuurtocht** Application. This project is an interactive web application that allows users to head into nature to discover specific plants, trees, and fungi. By taking photos of found items, users fill their digital **"Natuur Dex"**.
+</details>
 
-* **Natuur Dex:** Een overzicht van alle te verzamelen natuuritems, gegroepeerd per categorie (Bomen, Planten, Bloemen, Schimmels).
-* **Seizoensfilters:** De Dex past zich automatisch aan het huidige seizoen aan, of kan handmatig gefilterd worden (Lente, Zomer, Herfst, Winter).
-* **Camera Integratie:** In-browser camera functionaliteit om direct foto's te maken en te uploaden.
-* **Progressie Systeem:** Gebruikers zien direct hoeveel procent van de items ze hebben gevonden in het huidige gebied/seizoen.
-* **Wizard of Oz Validatie:** Een gesimuleerd AI-validatiesysteem om foto-uploads te testen (zie sectie **Validatie Simulatie**).
-* **Rijke Data:** Elk item bevat feitjes, locatie-informatie en quizvragen.
+<details>
+    
+<summary> ## 🚀 Core Functionalities </summary>
+* **🔍 Nature Dex: An overview of all collectable nature items, grouped by category (Trees, Plants, Flowers, Fungi).
 
-## 🛠️ Tech Stack
+* **🍂 Seasonal Filters: The Dex automatically adapts to the current season or can be manually filtered (Spring, Summer, Autumn, Winter).
 
-Dit project is gebouwd met de volgende technologieën:
+* **📸 Camera Integration: In-browser camera functionality to directly take and upload photos.
 
-| Categorie | Technologie | Opmerkingen |
+* **📊 Progression System: Users can immediately see what percentage of items they have found in the current area/season.
+
+* **🧙‍♂️ Wizard of Oz Validation: A simulated AI validation system to test photo uploads (see section **Validation Simulation**).
+
+* **💡 Rich Data: Each item contains facts, location information, and quiz questions.
+</details>
+
+<details>
+<summary>## 🛠️ Tech Stack</summary>
+
+| Category | Technology | Comments |
 | :--- | :--- | :--- |
-| **Framework** | Laravel (PHP) | Backend logica en routing. |
+| **Framework** | Laravel (PHP) | Backend logic and routing. |
 | **Frontend** | Blade Templates | View rendering. |
 | **Styling** | Tailwind CSS | Utility-first CSS framework. |
-| **Interactiviteit** | Alpine.js | Lichtgewicht JS voor camera, accordions en modals. |
-| **Database** | MySQL / SQLite | Dataopslag. |
+| **Interactiviteit** | Alpine.js | lightweight JS for camera, accordions and modals. |
+| **Database** | MySQL / SQLite | Datastorage. |
+</details>
 
-## ⚙️ Installatie & Lokaal Draaien
+<details>
+<summary> ## ⚙️ Installation and run locally </summary>
 
-Volg deze stappen om het project lokaal te draaien.
+Follow these steps to run locally
 
-### 1. Repository Klone & Navigeer
 
+### 1. Repository clone and navigate
 ```bash
-git clone <jouw-repo-url>
+git clone https://github.com/ThijsVanLoo1/tle2-natuurtocht.git
 cd tle2-natuurtocht
+```
 
 
-2. Dependencies Installeren
+2. Install dependencies
 
-Bash
-
-
+```Bash
 composer install
 npm install
+```
 
 
 3. Environment Setup
-Kopieer het .env.example bestand en genereer de applicatie sleutel. Zorg dat je database gegevens in de .env correct staan ingesteld.
+Copy the .env.example file and generate the application key. Ensure your database details are correctly configured in the .env file.
 
-Bash
-
-
+```Bash
 cp .env.example .env
 php artisan key:generate
+```
 
+4. Database Migrations & Seeding (Crucial)
+This is a crucial step. The ManualCardSeeder fills the database with all nature cards (Nettle, Oak, etc.) including rich JSON data.
 
-4. Database Migraties & Seeding (Cruciaal)
-Dit is een cruciale stap. De ManualCardSeeder vult de database met alle natuurkaarten (Brandnetel, Eik, etc.) inclusief rijke JSON-data.
-
-Bash
-
-
+```Bash
 php artisan migrate:fresh --seed
+```
 
+5. Start the Server
+Start the frontend asset watcher and the Laravel development server.
 
-5. Start de Server
-Start de frontend asset watcher en de Laravel development server.
-
-Bash
-
-
+```Bash
 # Terminal 1: Frontend assets compiler
 npm run dev
 
 # Terminal 2: Laravel server
 php artisan serve
+```
+</details>
 
+<details>
+<summary>📸 Validation Simulation (Wizard of Oz) </summary>
 
-📸 Validatie Simulatie (Wizard of Oz)
-Voor User Story 19 ("Als gebruiker wil ik weten of de foto correct is") is een Wizard of Oz methode geïmplementeerd. Omdat er nog geen echte AI-beeldherkenning is, simuleren we dit proces.
-Scenario
-Actie
-Effectieve Input
-Resultaat
-❌ Foutieve Foto
-Klik met de muis op de knop "Gebruik foto".
-wizard_correct = 0
-Foutmelding: "Helaas, de foto wordt niet herkend als een [Kaartnaam]..."
-✅ Correcte Foto
-Druk op de ENTER toets op het toetsenbord (terwijl de preview zichtbaar is).
-wizard_correct = 1
-Goedgekeurd, geüpload, kaart toegevoegd aan collectie.
+For User Story 19 ("As a user I want to know if the photo is correct") a Wizard of Oz method has been implemented. Since there is no real AI image recognition yet, we simulate this process.
 
-De PhotoController checkt de wizard_correct waarde en geeft een 422 error terug als deze 0 is (Foutief).
-📂 Project Structuur (Key Files)
-Enkele belangrijke bestanden in de codebase:
-app/Models/Card.php: Het hoofdmodel. Maakt gebruik van een JSON-kolom (properties) om flexibele data (feitjes, quizvragen, kenmerken) op te slaan.
-app/Http/Controllers/NatuurDexController.php: Regelt de logica voor het dashboard, inclusief het filteren op seizoenen en het berekenen van de voortgangspercentages.
-app/Http/Controllers/PhotoController.php: Verwerkt de upload, voert de "Wizard of Oz" validatie uit en koppelt de kaart aan de gebruiker.
-resources/views/cards/show.blade.php: De detailpagina. Bevat de Alpine.js logica (x-data="camera(...)") voor het aansturen van de webcam en het afvangen van de Enter-toets.
-🧪 Database Seeding Voorbeeld
-De ManualCardSeeder vult de cards tabel met rijke data. De structuur van de data in de properties JSON kolom ziet er ongeveer zo uit:
+❌ Incorrect Photo Click the "Use photo" button with the mouse. wizard_correct = 0 Error message: "Unfortunately, the photo is not recognized as a [Card name]..." ✅ Correct Photo Press the ENTER key on the keyboard (while the preview is visible). wizard_correct = 1 Approved, uploaded, card added to collection.
 
-JSON
+The PhotoController checks the wizard_correct value and returns a 422 error if it is 0 (Incorrect).
+</details>
+
+<details>
+
+<summary>📂 Project Structure (Key Files)</summary>
+Some important files in the codebase: app/Models/Card.php: The main model. Uses a JSON column (properties) to store flexible data (facts, quiz questions, characteristics). app/Http/Controllers/NatuurDexController.php: Manages the logic for the dashboard, including seasonal filtering and calculating progress percentages. app/Http/Controllers/PhotoController.php: Processes the upload, performs the "Wizard of Oz" validation, and links the card to the user. resources/views/cards/show.blade.php: The detail page. Contains the Alpine.js logic (x-data="camera(...)") for controlling the webcam and capturing the Enter key. 🧪 Database Seeding Example The ManualCardSeeder fills the cards table with rich data. The structure of the data in the properties JSON column looks approximately like this:
+
+```JSON
 
 
 {
@@ -111,6 +116,7 @@ JSON
     "locatie_text": "Bosranden"
 }
 
+```
 
 
-
+</details>
