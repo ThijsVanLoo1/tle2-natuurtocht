@@ -57,7 +57,8 @@
                     @if($owned)
                         <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded">
                             <h2 class="font-semibold text-green-800">Extra Informatie</h2>
-                            <p class="text-gray-700 mt-2">{{ $locatieText ?? 'Geen extra informatie beschikbaar.' }}</p>
+                            <p class="text-gray-700 mt-2">{{ $card->extra_info ?? 'Geen extra informatie beschikbaar.' }}
+                            </p>
 
                             <h3 class="font-semibold text-green-800 mt-4">Leuk weetje</h3>
                             <p class="text-gray-700 mt-2">{{ $feitje ?? 'Geen weetje beschikbaar.' }}</p>
