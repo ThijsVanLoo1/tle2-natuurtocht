@@ -23,7 +23,10 @@
     <section style="margin-top: 6vh;">
         <h1 style="font-size: 2rem;">Upload gelukt!</h1>
         <hr style="background: black; margin-top: 2vh; margin-bottom: 2vh;">
-        <p style="margin-left: 15vw; margin-right: 15vw;">Beantwoord de vraag juist voor een glimmende kaart!</p>
+        <p style="margin-right: 15vw; width: 100%; box-sizing: border-box;">
+            Beantwoord de vraag juist voor een glimmende kaart!
+        </p>
+
     </section>
     <section style="margin-top: 3vh;">
         <form action="{{ route('cards.makeShiny', $idCard)}}" method="POST" id="rightAnwserForm">
