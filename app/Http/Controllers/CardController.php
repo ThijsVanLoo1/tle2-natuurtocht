@@ -63,28 +63,27 @@ class CardController extends Controller
             $card->id => ['acquired_at' => now()->toDateString()],
         ]);
 
-        $ownedCard = $user->cards()->where('cards.id', $card->id)->first();
-        $wasShiny = (bool) ($ownedCard?->pivot?->is_shiny ?? false);
+        // Maak shiny op de pivot
+        $user->cards()->updateExistingPivot($card->id, [
+            'is_shiny' => 1,
+        ]);
 
-        if (!$wasShiny) {
-            $user->cards()->updateExistingPivot($card->id, [
-                'is_shiny' => 1,
+        // Bonuspunten: +15 (want 15 voor collect was al gegeven, shiny moet totaal 30 zijn)
+        $alreadyBonus = $user->pointTransactions()
+            ->where('action', 'card_shiny')
+            ->where('card_id', $card->id)
+            ->exists();
+
+        if (!$alreadyBonus) {
+            $user->awardPoints(15, 'card_shiny', $card, [
+                'from' => 'quiz_correct',
             ]);
-
-            $alreadyBonus = $user->pointTransactions()
-                ->where('action', 'card_shiny')
-                ->where('card_id', $card->id)
-                ->exists();
-
-            if (!$alreadyBonus) {
-                $user->awardPoints(15, 'card_shiny', $card, [
-                    'from' => 'quiz_correct',
-                ]);
-            }
         }
 
         return redirect()->route('cards.show', $card->id)
-            ->with('success', $wasShiny ? 'Deze kaart was al shiny!' : 'Goed! Kaart is nu shiny 🎉 (+15 bonus, totaal 30)');
+            ->with('success', 'Goed! Kaart is nu shiny 🎉 (+15 bonus, totaal 30)');
+
+
     }
 
 

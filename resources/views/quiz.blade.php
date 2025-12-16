@@ -18,7 +18,6 @@
     <div style="visibility: hidden; position: absolute"><!--Hidden elements-->
         <p id="answerNum">{{$setAnswerId}}</p>
         <p id="answerExplanation"></p>
-        <!--🔴 Dit moet nog een 'if empty' zodat er of text is of de daadwerkelijke explanation-->
     </div>
     <section style="margin-top: 6vh;">
         <h1 style="font-size: 2rem;">Upload gelukt!</h1>
