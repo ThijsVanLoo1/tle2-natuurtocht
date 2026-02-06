@@ -114,4 +114,9 @@ class User extends Authenticatable
             }
         );
     }
+
+    public function isAdmin(): bool
+    {
+        return (bool)$this->admin;
+    }
 }

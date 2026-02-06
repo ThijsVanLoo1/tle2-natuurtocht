@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\NatuurDexController;
 use App\Http\Controllers\PhotoController;
@@ -32,6 +33,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/cards/{card}', [CardController::class, 'show'])->name('cards.show');
 
     Route::post('/cards/{card}/upload-photo', [PhotoController::class, 'store'])->name('cards.upload');
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    // Add this line to handle GET /admin/cards
+    Route::get('/cards', [AdminController::class, 'index'])->name('admin.cards.index');
+    Route::get('/cards/create', [AdminController::class, 'create'])->name('admin.cards.create');
+    Route::post('/cards', [AdminController::class, 'store'])->name('admin.cards.store');
+    Route::get('/cards/{card}/edit', [AdminController::class, 'edit'])->name('admin.cards.edit');
+    Route::put('/cards/{card}', [AdminController::class, 'update'])->name('admin.cards.update');
+    Route::delete('/cards/{card}', [AdminController::class, 'destroy'])->name('admin.cards.destroy');
 });
 
 Route::get('/test-layout', function () {
